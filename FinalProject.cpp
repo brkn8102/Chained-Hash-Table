@@ -1,74 +1,10 @@
 // FinalProject.cpp created by Brandon Knutson on 4/13/2015
 
+#include "InputUtilities.h"
 #include "HashTable.h"
 #include <iostream>
 
 using namespace std;
-
-bool isInteger( string input )
-{
-    for ( int i = ( input[ 0 ] == '-' ? 1 : 0 ); i < input.size(); ++i )
-    {
-        int ASCIIValue = input[ i ];
-        if ( ASCIIValue < 48 || 57 < ASCIIValue )
-        {
-            return false;
-        }
-    }
-    
-    return true;
-}
-
-bool isPositiveInteger( string input )
-{
-    if ( !isInteger( input ) )
-    {
-        return false;
-    }
-    else
-    {
-        int integer = stoi( input );
-        return 0 < integer;
-    }
-}
-
-bool isValidResponse( string input )
-{
-    return ( input == "Y" || input == "y" || input == "N" || input == "n" );
-}
-
-bool getResponse( string input )
-{
-    return ( input == "Y" || input == "y" );
-}
-
-string getKey()
-{
-    string input = "";
-    
-    cout << "Enter the data element key (a string): ";
-    cin >> input;
-    
-    return input;
-}
-
-int getValue()
-{
-    string input = "";
-    
-    cout << "Enter the data element value (an integer): ";
-    cin >> input;
-    
-    while ( !isInteger( input ) )
-    {
-        cout << "Invalid input. Please enter an integer." << endl;
-        
-        cout << "Enter the data element value (an integer): ";
-        cin >> input;
-    }
-    
-    return stoi( input );
-}
 
 int main()
 {
