@@ -21,7 +21,7 @@ instructions	for	how	to	install	it.
 
 ## System Requirements
 
-This program has been used on both Mac (using Xcode) and Linux (using Code::Blocks) operating systems. 
+This program has been used on both Mac (with Xcode) and Linux (with Code::Blocks) operating systems. 
 
 ## Group Members
 
