@@ -16,6 +16,7 @@ class HashTable
 {
 private:
     std::vector< std::vector<Element *> * > *table;
+    bool dynamicCapability;
     int MAXIMUM_ALLOWED_CHAIN_SIZE;
     int largestChainSize;
     int numberOfElements;
@@ -25,8 +26,11 @@ private:
     void doubleTableSize();
     
 public:
-    HashTable( int initialTableSize, int MAXIMUM_ALLOWED_CHAIN_SIZE );
+    HashTable( int initialTableSize, bool dynamicCapability, int MAXIMUM_ALLOWED_CHAIN_SIZE );
     virtual ~HashTable();
+    void setDynamicCapability( bool dynamicCapability );
+    bool getDynamicCapability();
+    void setMaximumAllowedChainLength( int maximumAllowedChainSize );
     void insertElement( std::string key, int value );
     void removeElement( std::string key );
     void findElement( std::string key );

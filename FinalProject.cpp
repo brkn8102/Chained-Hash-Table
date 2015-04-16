@@ -32,6 +32,16 @@ bool isPositiveInteger( string input )
     }
 }
 
+bool isValidResponse( string input )
+{
+    return ( input == "Y" || input == "y" || input == "N" || input == "n" );
+}
+
+bool getResponse( string input )
+{
+    return ( input == "Y" || input == "y" );
+}
+
 string getKey()
 {
     string input = "";
@@ -62,7 +72,7 @@ int getValue()
 
 int main()
 {
-    cout << "Welcome to Brandon's Customizable and Dynamic Hash Table." << endl << endl;
+    cout << "Welcome to the Customizable and Dynamic Hash Table." << endl << endl;
     
     string input = "";
     
@@ -76,17 +86,37 @@ int main()
     }
     int initialTableSize = stoi( input );
     
-    cout << endl << "Enter the maximum allowed chain length: ";
+    cout << endl << "Dynamic table resizing allows for the number of hash table collisions to be kept below a set threshold by increasing the table size. ";
+    cout << "Would you like to enable the dynamic table resizing capability?" << endl;
+    cout << "Enter input (Y/N): ";
     cin >> input;
-    while ( !isPositiveInteger( input ) )
+    while ( !isValidResponse( input ) )
     {
-        cout << "Invalid input. Please enter a positive integer." << endl;
-        cout << "Enter the maximum allowed chain length: ";
+        cout << "Invalid input. Please enter \"Y\" or \"N\" to answer yes or no, respectively." << endl;
+        cout << "Enter response (Y/N): ";
         cin >> input;
     }
-    int maximumChainLength = stoi( input );
+    bool dynamicCapability = getResponse( input );
     
-    HashTable *hashTable = new HashTable( initialTableSize, maximumChainLength );
+    int maximumAllowedChainLength;
+    if ( dynamicCapability )
+    {
+        cout << endl << "Enter the maximum allowed chain length: ";
+        cin >> input;
+        while ( !isPositiveInteger( input ) )
+        {
+            cout << "Invalid input. Please enter a positive integer." << endl;
+            cout << "Enter the maximum allowed chain length: ";
+            cin >> input;
+        }
+        maximumAllowedChainLength = stoi( input );
+    }
+    else
+    {
+        maximumAllowedChainLength = -1;
+    }
+    
+    HashTable *hashTable = new HashTable( initialTableSize, dynamicCapability, maximumAllowedChainLength );
     
     while ( true )
     {
@@ -95,9 +125,10 @@ int main()
         cout << "1. Insert data element" << endl;
         cout << "2. Remove data element" << endl;
         cout << "3. Find data element" << endl;
-        cout << "4. Print table properties" << endl;
-        cout << "5. Print table data elements" << endl;
-        cout << "6. Quit" << endl;
+        cout << "4. Switch " << ( hashTable->getDynamicCapability() ? "OFF" : "ON" ) << " dynamic resizing capability" << endl;
+        cout << "5. Print table properties" << endl;
+        cout << "6. Print table data elements" << endl;
+        cout << "7. Quit" << endl;
         
         cin >> input;
         
@@ -124,13 +155,35 @@ int main()
         }
         else if ( input == "4" )
         {
-            hashTable->printProperties();
+            hashTable->setDynamicCapability( !hashTable->getDynamicCapability() );
+            
+            if ( hashTable->getDynamicCapability() )
+            {
+                cout << "Enter the maximum allowed chain length: ";
+                cin >> input;
+                while ( !isPositiveInteger( input ) )
+                {
+                    cout << "Invalid input. Please enter a positive integer." << endl;
+                    cout << "Enter the maximum allowed chain length: ";
+                    cin >> input;
+                }
+                cout << endl;
+                int maximumAllowedChainLength = stoi( input );
+                
+                hashTable->setMaximumAllowedChainLength( maximumAllowedChainLength );
+            }
+            
+            hashTable->resize();
         }
         else if ( input == "5" )
         {
-            hashTable->printElements();
+            hashTable->printProperties();
         }
         else if ( input == "6" )
+        {
+            hashTable->printElements();
+        }
+        else if ( input == "7" )
         {
             cout << "Goodbye." << endl;
             break;

@@ -2,9 +2,10 @@
 
 #include "HashTable.h"
 
-HashTable::HashTable( int initialTableSize, int maximumAllowedChainSize )
+HashTable::HashTable( int initialTableSize, bool dynamic, int maximumAllowedChainSize )
 {
     table = new std::vector< std::vector<Element *> * >( initialTableSize );
+    dynamicCapability = dynamic;
     MAXIMUM_ALLOWED_CHAIN_SIZE = maximumAllowedChainSize;
     largestChainSize = 0;
     numberOfElements = 0;
@@ -35,6 +36,21 @@ HashTable::~HashTable()
     
     delete [] table;
     table = nullptr;
+}
+
+void HashTable::setDynamicCapability( bool dynamic )
+{
+    dynamicCapability = dynamic;
+}
+
+bool HashTable::getDynamicCapability()
+{
+    return dynamicCapability;
+}
+
+void HashTable::setMaximumAllowedChainLength( int maximumAllowedChainSize )
+{
+    MAXIMUM_ALLOWED_CHAIN_SIZE = maximumAllowedChainSize;
 }
 
 void HashTable::insertElement( std::string key, int value )
@@ -140,7 +156,8 @@ int HashTable::findElementIndex( std::string key )
 void HashTable::printProperties()
 {
     std::cout << "Table size: " << table->size() << std::endl;
-    std::cout << "Maximum allowed chain size: " << MAXIMUM_ALLOWED_CHAIN_SIZE << std::endl;
+    std::cout << "Dynamic table resizing capability: " << ( dynamicCapability ? "ON" : "OFF" ) << std::endl;
+    if ( dynamicCapability ) std::cout << "Maximum allowed chain size: " << MAXIMUM_ALLOWED_CHAIN_SIZE << std::endl;
     std::cout << "Largest chain size: " << largestChainSize << std::endl;
     std::cout << "Number of elements: " << numberOfElements << std::endl;
 }
@@ -217,7 +234,7 @@ void HashTable::doubleTableSize()
 
 void HashTable::resize()
 {
-    while ( largestChainSize > MAXIMUM_ALLOWED_CHAIN_SIZE )
+    while ( largestChainSize > MAXIMUM_ALLOWED_CHAIN_SIZE && dynamicCapability )
     {
         doubleTableSize();
         
