@@ -21,23 +21,34 @@ private:
     int largestChainSize;
     int numberOfElements;
     
-    int findElementIndex( std::string key );
-    int hashFunction( std::string key );
+    int getElementChainIndex( std::string key );
     void doubleTableSize();
     
 public:
     HashTable( int initialTableSize, bool dynamicCapability, int MAXIMUM_ALLOWED_CHAIN_SIZE );
     virtual ~HashTable();
+    
+    void insertElement( std::string key, int value );
+    bool removeElement( std::string key );
+    Element * getElement( std::string key );
+    
     void setDynamicCapability( bool dynamicCapability );
     bool getDynamicCapability();
-    void setMaximumAllowedChainLength( int maximumAllowedChainSize );
-    void insertElement( std::string key, int value );
-    void removeElement( std::string key );
-    void findElement( std::string key );
-    void printElements();
-    void printProperties();
-    void resize();
     
+    void setMaximumAllowedChainSize( int maximumAllowedChainSize );
+    int getMaximumAllowedChainSize();
+    
+    int getTableSize();
+    
+    int getLargestChainSize();
+    
+    int getNumberOfElements();
+    
+    int hashFunction( std::string key );
+    
+    int resize();
+    
+    std::string getElementsString();
 };
 
 #endif /* defined(__Working__HashTable__) */

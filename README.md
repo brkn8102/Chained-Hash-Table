@@ -4,7 +4,7 @@
 
 ## Project Summary
 
-This program is a command-line-based hash table. The essential feature of this hash table is that it is dynamic; it allows for the user to set a maximum number of allowed collisions for any given chain in the table. If this threshold is exceeded the table is resized as necessary so that the the number of collisions in any chain is below or at the allowed value. The maximum number of allowed collisions can be changed at any time. Also, the program allows for the user to set the initial table size. The basic data structure used to store information in this program is a struct called an "Element." An Element contains two properties: a key (string) and a value (int). The hash function used 
+This program is basically a hash table with added functionality. The essential feature of this hash table is that it has a dynamic capability which allows for the user to set a maximum number of allowed collisions for any given chain in the table. If this threshold is exceeded as data is inputted into the table, then the table is resized as necessary so that the the number of collisions in any chain is below or at the allowed value. The maximum number of allowed collisions can be changed at any time. Also, the program allows for the user to set the table size. The basic data structure used to store information in this hash table is a struct called an "Element," which contains two properties: a key (string) and a value (int).
 
 ## How to Run
 
@@ -29,9 +29,8 @@ This program has been used on both Mac (with Xcode) and Linux (with Code::Blocks
 
 ## Contributors
 
-List	the	people	who	were	not	on	the	project	team,	but	may	have	contributed	
-comments,	enhancements,	and	bug	fixes.
+N/A
 
 ## Open Issues/Bugs
 
-List	any	known	bugs	in	the	project,	and	any	open	enhancement	requests.
+List any	known	bugs	in	the	project,	and	any	open	enhancement	requests.

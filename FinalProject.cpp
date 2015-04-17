@@ -75,19 +75,27 @@ int main()
             
             hashTable->insertElement( key, value );
             
-            hashTable->resize();
+            int doublings = hashTable->resize();
+            if ( doublings > 0 ) cout << "Doubled table size " << doublings << " times." << endl;
         }
         else if ( input == "2" )
         {
             string key = getKey();
             
-            hashTable->removeElement( key );
+            bool elementRemoved = hashTable->removeElement( key );
+            
+            if ( !elementRemoved ) cout << "Element not found." << endl;
         }
         else if ( input == "3" )
         {
             string key = getKey();
             
-            hashTable->findElement( key );
+            Element *element = hashTable->getElement( key );
+            
+            if ( element == nullptr )
+                cout << "Element not found." << endl;
+            else
+                std::cout << "Index " << hashTable->hashFunction( element->key ) << ": ( " << element->key << ", " << element->value << " )" << std::endl;
         }
         else if ( input == "4" )
         {
@@ -106,21 +114,32 @@ int main()
                 cout << endl;
                 int maximumAllowedChainLength = stoi( input );
                 
-                hashTable->setMaximumAllowedChainLength( maximumAllowedChainLength );
+                hashTable->setMaximumAllowedChainSize( maximumAllowedChainLength );
             }
             
-            hashTable->resize();
+            int doublings = hashTable->resize();
+            if ( doublings > 0 ) cout << "Doubled table size " << doublings << " times." << endl;
         }
         else if ( input == "5" )
         {
-            hashTable->printProperties();
+            cout << "Table size: " << hashTable->getTableSize() << endl;
+            
+            cout << "Dynamic table resizing capability: " << ( dynamicCapability ? "ON" : "OFF" ) << endl;
+            
+            if ( hashTable->getDynamicCapability() ) cout << "Maximum allowed chain size: " << hashTable->getMaximumAllowedChainSize() << endl;
+            
+            cout << "Largest chain size: " << hashTable->getLargestChainSize() << endl;
+            
+            cout << "Number of elements: " << hashTable->getNumberOfElements() << endl;
         }
         else if ( input == "6" )
         {
-            hashTable->printElements();
+            cout << hashTable->getElementsString();
         }
         else if ( input == "7" )
         {
+            delete hashTable;
+            
             cout << "Goodbye." << endl;
             break;
         }

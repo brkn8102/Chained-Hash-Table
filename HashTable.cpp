@@ -29,28 +29,13 @@ HashTable::~HashTable()
                 chain->erase( chain->begin() );
             }
             
-            delete [] chain;
+            delete chain;
             chain = nullptr;
         }
     }
     
-    delete [] table;
+    delete table;
     table = nullptr;
-}
-
-void HashTable::setDynamicCapability( bool dynamic )
-{
-    dynamicCapability = dynamic;
-}
-
-bool HashTable::getDynamicCapability()
-{
-    return dynamicCapability;
-}
-
-void HashTable::setMaximumAllowedChainLength( int maximumAllowedChainSize )
-{
-    MAXIMUM_ALLOWED_CHAIN_SIZE = maximumAllowedChainSize;
 }
 
 void HashTable::insertElement( std::string key, int value )
@@ -94,20 +79,20 @@ void HashTable::insertElement( std::string key, int value )
     ++numberOfElements;
 }
 
-void HashTable::removeElement( std::string key )
+bool HashTable::removeElement( std::string key )
 {
-    int index = findElementIndex( key );
+    int chainIndex = getElementChainIndex( key );
     
-    if ( index == -1 )
+    if ( chainIndex == -1 )
     {
-        std::cout << "Element not found." << std::endl;
+        return false;
     }
     else
     {
         std::vector<Element *> *chain = (*table)[ hashFunction( key ) ];
-        delete (*chain)[ index ];
-        (*chain)[ index ] = nullptr;
-        chain->erase( chain->begin() + index );
+        delete (*chain)[ chainIndex ];
+        (*chain)[ chainIndex ] = nullptr;
+        chain->erase( chain->begin() + chainIndex );
         
         if ( chain->size() == 0 )
         {
@@ -115,58 +100,63 @@ void HashTable::removeElement( std::string key )
         }
         
         --numberOfElements;
+        
+        return true;
     }
 }
 
-void HashTable::findElement( std::string key )
+Element * HashTable::getElement( std::string key )
 {
-    int index = findElementIndex( key );
+    int index = getElementChainIndex( key );
     
     if ( index == -1 )
-    {
-        std::cout << "Element not found." << std::endl;
-    }
+        return nullptr;
     else
-    {
-        Element *element = (*(*table)[ hashFunction( key ) ])[ index ];
-        std::cout << "Index " << hashFunction( key ) << ": ( " << element->key << ", " << element->value << " )" << std::endl;
-    }
+        return (*(*table)[ hashFunction( key ) ])[ index ];
 }
 
-int HashTable::findElementIndex( std::string key )
+void HashTable::setDynamicCapability( bool dynamic )
 {
-    int index = -1;
-    
-    std::vector<Element *> *chain = (*table)[ hashFunction( key ) ];
-    
-    if ( chain != nullptr )
-    {
-        for ( int i = 0; i < chain->size(); ++i )
-        {
-            if ( key == (*chain)[ i ]->key )
-            {
-                index = i;
-            }
-        }
-    }
-    
-    return index;
+    dynamicCapability = dynamic;
 }
 
-void HashTable::printProperties()
+bool HashTable::getDynamicCapability()
 {
-    std::cout << "Table size: " << table->size() << std::endl;
-    std::cout << "Dynamic table resizing capability: " << ( dynamicCapability ? "ON" : "OFF" ) << std::endl;
-    if ( dynamicCapability ) std::cout << "Maximum allowed chain size: " << MAXIMUM_ALLOWED_CHAIN_SIZE << std::endl;
-    std::cout << "Largest chain size: " << largestChainSize << std::endl;
-    std::cout << "Number of elements: " << numberOfElements << std::endl;
+    return dynamicCapability;
 }
 
-void HashTable::printElements()
+void HashTable::setMaximumAllowedChainSize( int maximumAllowedChainSize )
 {
+    MAXIMUM_ALLOWED_CHAIN_SIZE = maximumAllowedChainSize;
+}
+
+int HashTable::getMaximumAllowedChainSize()
+{
+    return MAXIMUM_ALLOWED_CHAIN_SIZE;
+}
+
+int HashTable::getTableSize()
+{
+    return table->size();
+}
+
+int HashTable::getLargestChainSize()
+{
+    return largestChainSize;
+}
+
+int HashTable::getNumberOfElements()
+{
+    return numberOfElements;
+}
+
+std::string HashTable::getElementsString()
+{
+    std::string elements = "";
+    
     for ( int i = 0; i < table->size(); ++i )
     {
-        std::cout << "Index " << i << ": ";
+        elements += "Index " + std::to_string( i ) + ": ";
         
         std::vector<Element *> *chain = (*table)[ i ];
         
@@ -175,14 +165,16 @@ void HashTable::printElements()
             for ( int j = 0; j < chain->size() - 1; ++j )
             {
                 Element *element = (*chain)[ j ];
-                std::cout << "( " << element->key << ", " << element->value << " ), ";
+                elements += "( " + element->key + ", " + std::to_string( element->value ) + " ), ";
             }
             Element *lastElement = chain->back();
-            std::cout << "( " << lastElement->key << ", " << lastElement->value << " )";
+            elements += "( " + lastElement->key + ", " + std::to_string( lastElement->value ) + " )";
         }
         
-        std::cout << std::endl;
+        elements += "\n";
     }
+    
+    return elements;
 }
 
 int HashTable::hashFunction( std::string key )
@@ -232,12 +224,37 @@ void HashTable::doubleTableSize()
     elements = nullptr;
 }
 
-void HashTable::resize()
+int HashTable::resize()
 {
+    int doublings = 0;
+    
     while ( largestChainSize > MAXIMUM_ALLOWED_CHAIN_SIZE && dynamicCapability )
     {
         doubleTableSize();
         
-        std::cout << "Table size doubled." << std::endl;
+        ++doublings;
     }
+    
+    return doublings;
 }
+
+int HashTable::getElementChainIndex( std::string key )
+{
+    int index = -1;
+    
+    std::vector<Element *> *chain = (*table)[ hashFunction( key ) ];
+    
+    if ( chain != nullptr )
+    {
+        for ( int i = 0; i < chain->size(); ++i )
+        {
+            if ( key == (*chain)[ i ]->key )
+            {
+                index = i;
+            }
+        }
+    }
+    
+    return index;
+}
+
