@@ -22,8 +22,8 @@ int main()
     }
     int initialTableSize = stoi( input );
     
-    cout << endl << "Dynamic table resizing allows for the number of hash table collisions to be kept below a set threshold by increasing the table size. ";
-    cout << "Would you like to enable the dynamic table resizing capability?" << endl;
+    //Dynamic table resizing allows for the number of hash table collisions to be kept below a set threshold by increasing the table size.
+    cout << endl << "Would you like to enable the dynamic table resizing capability?" << endl;
     cout << "Enter input (Y/N): ";
     cin >> input;
     while ( !isValidResponse( input ) )
@@ -61,10 +61,11 @@ int main()
         cout << "1. Insert data element" << endl;
         cout << "2. Remove data element" << endl;
         cout << "3. Find data element" << endl;
-        cout << "4. Switch " << ( hashTable->getDynamicCapability() ? "OFF" : "ON" ) << " dynamic resizing capability" << endl;
-        cout << "5. Print table properties" << endl;
-        cout << "6. Print table data elements" << endl;
-        cout << "7. Quit" << endl;
+        cout << "4. Set table size" << endl;
+        cout << "5. Switch " << ( hashTable->getDynamicCapability() ? "OFF" : "ON" ) << " dynamic resizing capability" << endl;
+        cout << "6. Print table properties" << endl;
+        cout << "7. Print table data elements" << endl;
+        cout << "8. Quit" << endl;
         
         cin >> input;
         
@@ -74,9 +75,6 @@ int main()
             int value = getValue();
             
             hashTable->insertElement( key, value );
-            
-            int doublings = hashTable->resize();
-            if ( doublings > 0 ) cout << "Doubled table size " << doublings << " times." << endl;
         }
         else if ( input == "2" )
         {
@@ -99,9 +97,25 @@ int main()
         }
         else if ( input == "4" )
         {
-            hashTable->setDynamicCapability( !hashTable->getDynamicCapability() );
+            cout << "Enter table size: ";
+            cin >> input;
+            while ( !isPositiveInteger( input ) )
+            {
+                cout << "Invalid input. Please enter a positive integer." << endl;
+                cout << "Enter the table size: ";
+                cin >> input;
+            }
+            cout << endl;
             
-            if ( hashTable->getDynamicCapability() )
+            int tableSize = stoi( input );
+            hashTable->setTableSize( tableSize );
+        }
+        else if ( input == "5" )
+        {
+            bool dynamicCapability = !hashTable->getDynamicCapability();
+            
+            int maximumAllowedChainSize = 0;
+            if ( dynamicCapability )
             {
                 cout << "Enter the maximum allowed chain length: ";
                 cin >> input;
@@ -112,19 +126,18 @@ int main()
                     cin >> input;
                 }
                 cout << endl;
-                int maximumAllowedChainLength = stoi( input );
+                maximumAllowedChainSize = stoi( input );
                 
-                hashTable->setMaximumAllowedChainSize( maximumAllowedChainLength );
+                hashTable->setMaximumAllowedChainSize( maximumAllowedChainSize );
             }
             
-            int doublings = hashTable->resize();
-            if ( doublings > 0 ) cout << "Doubled table size " << doublings << " times." << endl;
+            hashTable->setDynamicCapability( dynamicCapability, maximumAllowedChainSize );
         }
-        else if ( input == "5" )
+        else if ( input == "6" )
         {
             cout << "Table size: " << hashTable->getTableSize() << endl;
             
-            cout << "Dynamic table resizing capability: " << ( dynamicCapability ? "ON" : "OFF" ) << endl;
+            cout << "Dynamic table resizing capability: " << ( hashTable->getDynamicCapability() ? "ON" : "OFF" ) << endl;
             
             if ( hashTable->getDynamicCapability() ) cout << "Maximum allowed chain size: " << hashTable->getMaximumAllowedChainSize() << endl;
             
@@ -132,11 +145,11 @@ int main()
             
             cout << "Number of elements: " << hashTable->getNumberOfElements() << endl;
         }
-        else if ( input == "6" )
+        else if ( input == "7" )
         {
             cout << hashTable->getElementsString();
         }
-        else if ( input == "7" )
+        else if ( input == "8" )
         {
             delete hashTable;
             
@@ -145,7 +158,7 @@ int main()
         }
         else
         {
-            cout << "Invalid input. Please enter an option number (1-5) from the menu below." << endl;
+            cout << "Invalid input. Please enter an option number (1-7) from the menu below." << endl;
         }
     }
     

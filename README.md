@@ -4,7 +4,7 @@
 
 ## Project Summary
 
-This program is basically a hash table with added functionality. The essential feature of this hash table is that it has a dynamic capability which allows for the user to set a maximum number of allowed collisions for any given chain in the table. If this threshold is exceeded as data is inputted into the table, then the table is resized as necessary so that the the number of collisions in any chain is below or at the allowed value. The maximum number of allowed collisions can be changed at any time. Also, the program allows for the user to set the table size. The basic data structure used to store information in this hash table is a struct called an "Element," which contains two properties: a key (string) and a value (int).
+This program is basically a hash table with added functionality. The essential feature is that this hash table has a dynamic capability which allows for the user to set a maximum number of allowed collisions for any given chain in the table. If this threshold is exceeded as data is inputted into the table, then the table is resized as necessary so that the the number of collisions in any chain is below or at the allowed value. This dynamic capability (which can be turned on or off), as well as the maximum number of allowed collisions, can be changed at any time. Also, the program allows for the user to set the table size. The basic data structure used to store information in this hash table is a struct called an "Element," which contains two properties: a key (string) and a value (int).
 
 ## How to Run
 

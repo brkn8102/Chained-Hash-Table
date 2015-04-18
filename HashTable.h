@@ -3,8 +3,9 @@
 #ifndef __Working__HashTable__
 #define __Working__HashTable__
 
-#include <iostream>
 #include <vector>
+#include <string>
+#include <climits>
 
 struct Element
 {
@@ -21,8 +22,12 @@ private:
     int largestChainSize;
     int numberOfElements;
     
+    void insertElementByPointer( Element *element );
     int getElementChainIndex( std::string key );
-    void doubleTableSize();
+    std::vector<Element *> * moveElementsFromTable();
+    void moveElementsToTable( std::vector<Element *> *elements );
+    void resetLargestChainSize();
+    void resize();
     
 public:
     HashTable( int initialTableSize, bool dynamicCapability, int MAXIMUM_ALLOWED_CHAIN_SIZE );
@@ -32,12 +37,13 @@ public:
     bool removeElement( std::string key );
     Element * getElement( std::string key );
     
-    void setDynamicCapability( bool dynamicCapability );
+    void setDynamicCapability( bool dynamicCapability, int maximumAllowedChainSize );
     bool getDynamicCapability();
     
     void setMaximumAllowedChainSize( int maximumAllowedChainSize );
     int getMaximumAllowedChainSize();
     
+    void setTableSize( int tableSize );
     int getTableSize();
     
     int getLargestChainSize();
@@ -45,8 +51,6 @@ public:
     int getNumberOfElements();
     
     int hashFunction( std::string key );
-    
-    int resize();
     
     std::string getElementsString();
 };
