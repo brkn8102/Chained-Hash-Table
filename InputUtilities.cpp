@@ -2,7 +2,6 @@
 
 #include "InputUtilities.h"
 
-
 bool isInteger( std::string input )    // checks if string is made of number characters (and minus sign)
 {
     for ( int i = ( input[ 0 ] == '-' ? 1 : 0 ); i < input.size(); ++i )
