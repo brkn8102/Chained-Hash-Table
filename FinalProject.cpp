@@ -14,7 +14,7 @@ int main()
     
     cout << "Enter the initial table size: ";
     cin >> input;
-    while ( !isPositiveInteger( input ) )
+    while ( !isPositiveInteger( input ) )   // initial table size must be positive integer
     {
         cout << "Invalid input. Please enter a positive integer." << endl;
         cout << "Enter the initial table size: ";
@@ -26,20 +26,20 @@ int main()
     cout << endl << "Would you like to enable the dynamic table resizing capability?" << endl;
     cout << "Enter input (Y/N): ";
     cin >> input;
-    while ( !isValidResponse( input ) )
+    while ( !isValidResponse( input ) )     // response must be "Y"/"y" or "N"/"n" to convert to boolean
     {
         cout << "Invalid input. Please enter \"Y\" or \"N\" to answer yes or no, respectively." << endl;
         cout << "Enter response (Y/N): ";
         cin >> input;
     }
-    bool dynamicCapability = getResponse( input );
+    bool dynamicCapability = getResponse( input );  // sets dynamic capability of table when declared/initialized
     
     int maximumAllowedChainLength;
-    if ( dynamicCapability )
+    if ( dynamicCapability )    // only need user to input maximum allowed chain length if dynamic capability is going to be enabled
     {
         cout << endl << "Enter the maximum allowed chain length: ";
         cin >> input;
-        while ( !isPositiveInteger( input ) )
+        while ( !isPositiveInteger( input ) )   // maximum allowed chain length must be positive integer
         {
             cout << "Invalid input. Please enter a positive integer." << endl;
             cout << "Enter the maximum allowed chain length: ";
@@ -52,9 +52,9 @@ int main()
         maximumAllowedChainLength = -1;
     }
     
-    HashTable *hashTable = new HashTable( initialTableSize, dynamicCapability, maximumAllowedChainLength );
+    HashTable *hashTable = new HashTable( initialTableSize, dynamicCapability, maximumAllowedChainLength ); // this is how a HashTable is declared
     
-    while ( true )
+    while ( true )      // this terminal program will demonstrate the methods of the HashTable class
     {
         cout << endl;
         cout << "______MAIN___MENU______" << endl;
@@ -71,24 +71,24 @@ int main()
         
         if ( input == "1" )
         {
-            string key = getKey();
-            int value = getValue();
+            string key = getKey();  // gets valid key string from user
+            int value = getValue();     // gets valid value int from user
             
-            hashTable->insertElement( key, value );
-        }
+            hashTable->insertElement( key, value );    // inserts new Element with key and value into
+        }                                              //  hash table, then resizes table if dynamic capability is ON
         else if ( input == "2" )
         {
-            string key = getKey();
+            string key = getKey();  // gets valid key string from user
             
-            bool elementRemoved = hashTable->removeElement( key );
-            
+            bool elementRemoved = hashTable->removeElement( key );  // removeElement( key ) returns true if element successfully removed,
+                                                                    // false otherwise;
             if ( !elementRemoved ) cout << "Element not found." << endl;
         }
         else if ( input == "3" )
         {
-            string key = getKey();
+            string key = getKey();   // gets valid key string from user
             
-            Element *element = hashTable->getElement( key );
+            Element *element = hashTable->getElement( key );  // getElement( key ) returns Element pointer with given key or null if not found
             
             if ( element == nullptr )
                 cout << "Element not found." << endl;
@@ -99,7 +99,7 @@ int main()
         {
             cout << "Enter table size: ";
             cin >> input;
-            while ( !isPositiveInteger( input ) )
+            while ( !isPositiveInteger( input ) ) // gets valid table size; table size must always be positive integer greater than zero
             {
                 cout << "Invalid input. Please enter a positive integer." << endl;
                 cout << "Enter the table size: ";
@@ -108,18 +108,18 @@ int main()
             cout << endl;
             
             int tableSize = stoi( input );
-            hashTable->setTableSize( tableSize );
+            hashTable->setTableSize( tableSize );  // sets new size of table; resizes automatically if dynamic capability is ON
         }
         else if ( input == "5" )
         {
-            bool dynamicCapability = !hashTable->getDynamicCapability();
+            bool dynamicCapability = !hashTable->getDynamicCapability();  // gets opposite of current dynamic capability
             
             int maximumAllowedChainSize = 0;
-            if ( dynamicCapability )
+            if ( dynamicCapability )       // if about to switch on dynamic capability, must get maximum allowed chain size user wants
             {
                 cout << "Enter the maximum allowed chain length: ";
                 cin >> input;
-                while ( !isPositiveInteger( input ) )
+                while ( !isPositiveInteger( input ) )       // maximum allowed chain size must be nonzero posive integer
                 {
                     cout << "Invalid input. Please enter a positive integer." << endl;
                     cout << "Enter the maximum allowed chain length: ";
@@ -128,14 +128,15 @@ int main()
                 cout << endl;
                 maximumAllowedChainSize = stoi( input );
                 
-                hashTable->setMaximumAllowedChainSize( maximumAllowedChainSize );
+                hashTable->setMaximumAllowedChainSize( maximumAllowedChainSize ); // sets maximum allowed chain size
             }
             
-            hashTable->setDynamicCapability( dynamicCapability, maximumAllowedChainSize );
-        }
+            hashTable->setDynamicCapability( dynamicCapability, maximumAllowedChainSize ); // sets dynamic capability and maximum allowed
+        }                                                                                  // chain size; ignores new max chain size if dynamic
+                                                                                           // capability is being turned OFF
         else if ( input == "6" )
-        {
-            cout << "Table size: " << hashTable->getTableSize() << endl;
+        {   // this is how to access hashTable properties such as table size, dynamic capability (true = ON, false = OFF ), maximum allowed
+            cout << "Table size: " << hashTable->getTableSize() << endl;        // chain size, largest chain size, and number of Elements
             
             cout << "Dynamic table resizing capability: " << ( hashTable->getDynamicCapability() ? "ON" : "OFF" ) << endl;
             
@@ -147,11 +148,11 @@ int main()
         }
         else if ( input == "7" )
         {
-            cout << hashTable->getElementsString();
+            cout << hashTable->getElementsString();  // returns hash table information as string for output
         }
         else if ( input == "8" )
         {
-            delete hashTable;
+            delete hashTable;       // deletes hashTable and all elements
             
             cout << "Goodbye." << endl;
             break;

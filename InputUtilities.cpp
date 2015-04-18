@@ -3,7 +3,7 @@
 #include "InputUtilities.h"
 
 
-bool isInteger( std::string input )
+bool isInteger( std::string input )    // checks if string is made of number characters (and minus sign)
 {
     for ( int i = ( input[ 0 ] == '-' ? 1 : 0 ); i < input.size(); ++i )
     {
@@ -17,7 +17,7 @@ bool isInteger( std::string input )
     return true;
 }
 
-bool isPositiveInteger( std::string input )
+bool isPositiveInteger( std::string input )     // checks if string represents nonzero positive integer
 {
     if ( !isInteger( input ) )
     {
@@ -30,17 +30,17 @@ bool isPositiveInteger( std::string input )
     }
 }
 
-bool isValidResponse( std::string input )
+bool isValidResponse( std::string input )   // checks if string is made of "Y"/"y" or "N"/"n" characters for conversion to boolean
 {
     return ( input == "Y" || input == "y" || input == "N" || input == "n" );
 }
 
-bool getResponse( std::string input )
+bool getResponse( std::string input )       // converts string response to boolean
 {
     return ( input == "Y" || input == "y" );
 }
 
-std::string getKey()
+std::string getKey()    // asks user for key string then returns response
 {
     std::string input = "";
     
@@ -50,7 +50,7 @@ std::string getKey()
     return input;
 }
 
-int getValue()
+int getValue()      // asks user for int value until reponse is valid (must be an integer)
 {
     std::string input = "";
     
