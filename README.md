@@ -18,8 +18,38 @@ HashTable *hashTable = new HashTable( initialTableSize, dynamicCapability, maxim
 
 string key = "key";
 int value = 7;
-hashTable->insert( key, value );
+hashTable->insertElement( key, value );
+
+Element *element = hashTable->getElement( key );
+
+hashTable->removeElement( key );
+
+dynamicCapability = false;
+int ignoredInteger = 4;   //maximum allowed chain size doesn't matter if turning dynamic capability off
+hashTable->setDynamicCapability( dynamicCapability, ignoredInteger );
+
+bool currentDynamicCapability = hashTable->getDynamicCapability();
+
+int currentMaximumAllowedChainSize =  hashTable->getMaximumAllowedChainSize();
+
+hashTable->setMaximumAllowedChainSize( currentMaximumAllowedChainSize + 1 );
+
+int newTableSize = 15;
+hashTable->setTableSize( newTableSize );
+
+int currentTableSize = hashTable->getTableSize();
+
+int currentLargestChainSize = hashTable->getLargestChainSize();
+
+int currentNumberOfElements = hashTable->getNumberOfElements();
+
+key = "some string";
+int hashFunctionValue = hashFunction( key );
+
+string elementsString = hashTable->getElementsString();
+
 ```
+
 
 ## Dependencies
 
