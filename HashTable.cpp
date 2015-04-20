@@ -2,6 +2,11 @@
 
 #include "HashTable.h"
 
+// HashTable constructor. Sets new table's initial size to initialTableSize, which must be a positive integer;
+// sets hash table dynamic capability (automatic resizing for collision reduction) to dynamic (true = ON, false = OFF);
+// sets maximum allowable chain size before table resizing to maximumAllowedChainSize, which must be a positive integer
+// (unless dynamic is off, in which case the maximum chain size is set to INT_MAX). Post-condition: table with given properties
+// is created.
 HashTable::HashTable( int initialTableSize, bool dynamic, int maximumAllowedChainSize )
 {
     table = new std::vector< std::vector<Element *> * >( initialTableSize );  // initializes HashTable properties
@@ -17,6 +22,8 @@ HashTable::HashTable( int initialTableSize, bool dynamic, int maximumAllowedChai
     }
 }
 
+// HashTable destructor. Deletes then sets to null all hash table element and chain pointers and the table pointer.
+// Pre-condition: table must not be null. Post-condition: all table elements and chains deleted; table set to null.
 HashTable::~HashTable()
 {
     for ( int i = 0; i < table->size(); ++i )  // deletes all chains and their elements
@@ -39,7 +46,10 @@ HashTable::~HashTable()
     table = nullptr;
 }
 
-void HashTable::insertElement( std::string key, int value )     //inserts element with key and value into table then resizes
+// Inserts element into table. Pre-condition: table must be non-null (which must be true for this method to be called).
+// Post condition: new element has been inserted into table and table is resized if dynamic capability is ON and collisions
+// need to be reduced.
+void HashTable::insertElement( std::string key, int value )
 {
     Element *element = new Element;     // allocates new element
     element->key = key;
@@ -50,6 +60,8 @@ void HashTable::insertElement( std::string key, int value )     //inserts elemen
     resize();     // will resize if dynamic capability has been turned on; otherwise it won't do anything
 }
 
+// Inserts element by function pointer. Pre-condition: inserted element must and table must be non-null. Post-condition:
+// 
 void HashTable::insertElementByPointer( Element *element )    // inserts element into table by element pointer; doesn't resize
 {
     int tableIndex = hashFunction( element->key );

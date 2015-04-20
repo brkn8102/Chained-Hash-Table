@@ -8,7 +8,7 @@ This program is basically a hash table with added functionality. The essential f
 
 ## How to Run
 
-See FinalProject.cpp file (Knutson_CSCI2270_FinalProject/FinalProject.cpp), which contains examples of how to use the HashTable object. This cpp file is also a fully functional terminal application that the user can tinker around with for a further demonstration of the HashTable object in practice.
+See FinalProject.cpp [file] (FinalProject.cpp), which contains examples of how to use the HashTable object. This cpp file is also a fully functional terminal application that the user can tinker around with for a further demonstration of the HashTable object in practice.
 
 ## Dependencies
 
