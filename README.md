@@ -10,7 +10,7 @@ This program is basically a hash table with added functionality. The essential f
 
 See [FinalProject.cpp file] (FinalProject.cpp), which contains examples of how to use the HashTable object. This cpp file is also a fully functional terminal application that the user can tinker around with for a further demonstration of the HashTable object in practice. There is also extensive documentation in the [HashTable.cpp file] (HashTable.cpp).
     
-'''go
+```go
 int initialTableSize = 10;
 bool dynamicCapability = true;
 int maximumAllowedChainSize = 2;
@@ -19,7 +19,7 @@ HashTable *hashTable = new HashTable( initialTableSize, dynamicCapability, maxim
 string key = "key";
 int value = 7;
 hashTable->insert( key, value );
-'''
+```
 
 ## Dependencies
 
