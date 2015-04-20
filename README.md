@@ -12,7 +12,7 @@ See FinalProject.cpp file (Knutson_CSCI2270_FinalProject/FinalProject.cpp), whic
 
 ## Dependencies
 
-The entire program requires the following libraries that must be included: <vector>, <string>, <climits>, <iostream>.
+The entire program requires the following libraries that must be included into various files: vector, string, climits, iostream.
 
 ## System Requirements
 
