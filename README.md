@@ -8,40 +8,11 @@ This program is basically a hash table with added functionality. The essential f
 
 ## How to Run
 
-This	section contains	instructions,	with	examples,	of	how	to	run	your	program.	You	
-should	also	include	a	link	here	to	the	project	documentation	that	you	will	provide	in	
-a	separate	file.
-
-    HashTable( int initialTableSize, bool dynamicCapability, int MAXIMUM_ALLOWED_CHAIN_SIZE );
-    virtual ~HashTable();
-
-    void insertElement( std::string key, int value );
-    bool removeElement( std::string key );
-    Element * getElement( std::string key );
-
-    void setDynamicCapability( bool dynamicCapability, int maximumAllowedChainSize );
-    bool getDynamicCapability();
-
-    void setMaximumAllowedChainSize( int maximumAllowedChainSize );
-    int getMaximumAllowedChainSize();
-
-    void setTableSize( int tableSize );
-    int getTableSize();
-
-    int getLargestChainSize();
-
-    int getNumberOfElements();
-    
-    int hashFunction( std::string key );
-
-    std::string getElementsString();
+See FinalProject.cpp file (Knutson_CSCI2270_FinalProject/FinalProject.cpp), which contains examples of how to use the HashTable object. This cpp file is also a fully functional terminal application that the user can tinker around with for a further demonstration of the HashTable object in practice.
 
 ## Dependencies
 
-This	section	contains	a	description	of	any	dependencies	that	your	program	requires.	
-For	example,	if	your	program	relies	on	another	third-party	library	that	needs	to	be	
-installed,	you	should	provide	a	description	of	where	to	find	that	library	and	
-instructions	for	how	to	install	it.
+The entire program requires the following libraries that must be included: <vector>, <string>, <climits>, <iostream>.
 
 ## System Requirements
 
@@ -57,4 +28,4 @@ N/A
 
 ## Open Issues/Bugs
 
-List any	known	bugs	in	the	project,	and	any	open	enhancement	requests.
+N/A
