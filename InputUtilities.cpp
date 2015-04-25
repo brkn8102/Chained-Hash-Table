@@ -29,7 +29,7 @@ bool isPositiveInteger( std::string input )     // checks if string represents n
     }
 }
 
-bool isValidResponse( std::string input )   // checks if string is made of "Y"/"y" or "N"/"n" characters for conversion to boolean
+bool isValidResponse( std::string input ) // checks if string is made of "Y"/"y" or "N"/"n" characters for conversion to boolean
 {
     return ( input == "Y" || input == "y" || input == "N" || input == "n" );
 }
