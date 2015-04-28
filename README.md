@@ -39,16 +39,20 @@ int newTableSize = 15;
 hashTable->setTableSize( newTableSize );
 
 int currentTableSize = hashTable->getTableSize();
+cout << "current table size: " << currentTableSize << endl;
 
 int currentLargestChainSize = hashTable->getLargestChainSize();
+cout << "current largest chain size: " << currentLargestChainSize << endl;
 
 int currentNumberOfElements = hashTable->getNumberOfElements();
+cout << "current number of elements: " << currentNumberOfElements << endl;
 
 key = "some string";
-int hashFunctionValue = hashFunction( key );
+int hashFunctionValue = hashTable->hashFunction( key );
+cout << "hash function value: " << hashFunctionValue << endl;
 
 string elementsString = hashTable->getElementsString();
-
+cout << elementsString << endl;
 ```
 
 
