@@ -111,18 +111,20 @@ void HashTable::insertElementByPointer( Element *element )
 {
     int tableIndex = hashFunction( element->key );
     std::vector<Element *> *chain = (*table)[ tableIndex ];
-    
+    int insertFlag = 0;
     if ( chain == nullptr )     // new chain allocated if chain is null
     {
         chain = new std::vector<Element *>( 1 );
         (*table)[ tableIndex ] = chain;
         chain->front() = element;
+        insertFlag = 1;
     }
     else       // adds element to ordered location in chain if chain isn't null
     {
         if ( element->key > chain->back()->key )
         {
             chain->push_back( element );
+            insertFlag = 1;
         }
         else
         {
@@ -131,6 +133,7 @@ void HashTable::insertElementByPointer( Element *element )
                 if ( element->key < (*chain)[ i ]->key )
                 {
                     chain->insert( chain->begin() + i, element );
+                    insertFlag = 1;
                 }
             }
         }
@@ -140,8 +143,8 @@ void HashTable::insertElementByPointer( Element *element )
     {
         largestChainSize = chain->size();
     }
-    
-    ++numberOfElements;  // increments number of elements
+    if(insertFlag)++numberOfElements;  // increments number of elements
+
 }
 
 /*
