@@ -70,8 +70,8 @@ This program has been used on both Mac (with Xcode) and Linux (with Code::Blocks
 
 ## Contributors
 
-N/A
+* Peilun Zhang
 
 ## Open Issues/Bugs
 
-N/A
+* I was just recently made aware of a bug where if multiple data elements with the exact same key ASCII sum are entered into the hash table the terminal becomes unresponsive.
