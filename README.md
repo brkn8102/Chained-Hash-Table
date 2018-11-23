@@ -1,6 +1,4 @@
-# Knutson_CSCI2270_FinalProject
-
-# Dynamic and Customizable Hash Table
+# Chained Hash Table with Dynamic Resizing
 
 ## Project Summary
 
